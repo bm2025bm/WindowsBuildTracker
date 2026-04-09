@@ -30,7 +30,7 @@ Param(
     [int]$FallbackMaxAgeDays = 90
 )
 
-$ScriptVersion = '1.0.4'
+$ScriptVersion = '1.0.5'
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
@@ -177,16 +177,19 @@ function Set-NinjaFields {
     )
 
     # Verbose dump so the Ninja activity log shows exactly what we're about
-    # to write, including types — useful for diagnosing field-validation
-    # rejections.
-    $behindType  = if ($null -ne $MonthsBehind) { $MonthsBehind.GetType().FullName } else { '<null>' }
-    $behindCount = if ($MonthsBehind -is [array]) { $MonthsBehind.Count } else { 1 }
+    # to write — useful for diagnosing field-validation rejections.
+    $behindDisplay = if ($null -ne $MonthsBehind) {
+        $t = $MonthsBehind.GetType().FullName
+        "'$MonthsBehind' (type=$t)"
+    } else {
+        '<not written>'
+    }
     Write-Host "===== Ninja field write ====="
     Write-Host "  windowscumulativeupdatestatus        = '$Status'"
     Write-Host "  windowscumulativeupdateversion       = '$BuildNumber'"
     Write-Host "  windowscumulativeupdatedatacollected = $CollectedAt"
     Write-Host "  windowscumulativeupdatedate          = '$DateString'"
-    Write-Host "  windowscumulativeupdatedifference    = '$MonthsBehind' (type=$behindType count=$behindCount)"
+    Write-Host "  windowscumulativeupdatedifference    = $behindDisplay"
     Write-Host "============================="
 
     Ninja-Property-Set windowscumulativeupdatestatus        $Status
@@ -225,7 +228,13 @@ function Invoke-Main {
         Write-Host "Detected build: $($version.BuildNumber)"
 
         if (Test-IsInsider) {
-            Set-NinjaFields -Status 'Insider' -BuildNumber $version.BuildNumber -CollectedAt $collectedAt
+            # Insider devices are continuously updated outside Patch Tuesday
+            # cadence, so "months behind" isn't meaningful. Report 0 so they
+            # pass compliance dashboards that filter on the difference field.
+            Set-NinjaFields -Status 'Insider' `
+                            -BuildNumber $version.BuildNumber `
+                            -CollectedAt $collectedAt `
+                            -MonthsBehind 0
             return 0
         }
 
