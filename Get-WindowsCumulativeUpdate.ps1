@@ -21,7 +21,7 @@
     Invariant: the date and difference fields are either valid data or empty.
     Dashboards should filter on status = OK before computing compliance.
 #>
-#Requires -Version 5.1
+#Requires -Version 3.0
 [CmdletBinding()]
 Param(
     [string]$DataUrl = 'https://raw.githubusercontent.com/bm2025bm/WindowsBuildTracker/main/windows-builds.json',
@@ -30,10 +30,17 @@ Param(
     [int]$FallbackMaxAgeDays = 90
 )
 
-$ScriptVersion = '1.0.5'
+$ScriptVersion = '1.0.6'
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
+
+# Force TLS 1.2 — older systems (PS 4 / Server 2012 / Win 7) default to
+# SSL3/TLS1.0, which GitHub rejects. Use bitwise-or so we don't downgrade
+# anything that's already enabled.
+try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+} catch { }
 
 # Embedded last-known-good database. Regenerated at release time from the
 # repo's windows-builds.json. Used only when both the network fetch and the
@@ -94,9 +101,13 @@ function Format-DateString {
 # ---------------------------------------------------------------------------
 
 function Get-MyWindowsVersion {
+    # Get-ItemPropertyValue is PS 5+; use Get-ItemProperty for PS 3/4 compat.
     $key = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
-    $currentBuild = Get-ItemPropertyValue $key -Name CurrentBuild
-    $ubr          = Get-ItemPropertyValue $key -Name UBR
+    $props = Get-ItemProperty -Path $key
+    $currentBuild = $props.CurrentBuild
+    # UBR (Update Build Revision) is missing on Server 2012 R2 / Win 8.1 and
+    # earlier. Default to 0 so the build number still has a valid format.
+    $ubr = if ($null -ne $props.UBR) { $props.UBR } else { 0 }
     return [PSCustomObject]@{
         BuildNumber = "$currentBuild.$ubr"
         Major       = [int]$currentBuild
@@ -219,7 +230,8 @@ function Invoke-Main {
         [string]$FallbackJson
     )
 
-    $collectedAt = [int][DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+    # ToUnixTimeSeconds() requires .NET 4.6 (PS 5+); compute manually for PS 3/4.
+    $collectedAt = [int]((Get-Date).ToUniversalTime() - (New-Object DateTime 1970,1,1)).TotalSeconds
     $version = $null
 
     try {
