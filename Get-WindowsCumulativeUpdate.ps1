@@ -179,9 +179,9 @@ function Set-NinjaFields {
     Ninja-Property-Set windowscumulativeupdatedate          $DateString
     if ($null -ne $MonthsBehind) {
         Ninja-Property-Set windowscumulativeupdatedifference $MonthsBehind
-    } else {
-        Ninja-Property-Set windowscumulativeupdatedifference ''
     }
+    # When $MonthsBehind is $null (non-OK status), leave the integer field
+    # untouched — Ninja rejects empty-string writes to Integer-typed fields.
     Write-Output "Status=$Status Build=$BuildNumber Date='$DateString' Behind=$MonthsBehind"
 }
 
