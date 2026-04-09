@@ -30,7 +30,7 @@ Param(
     [int]$FallbackMaxAgeDays = 90
 )
 
-$ScriptVersion = '1.0.6'
+$ScriptVersion = '1.0.7'
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
@@ -239,21 +239,32 @@ function Invoke-Main {
         $version = Get-MyWindowsVersion
         Write-Host "Detected build: $($version.BuildNumber)"
 
-        if (Test-IsInsider) {
-            # Insider devices are continuously updated outside Patch Tuesday
-            # cadence, so "months behind" isn't meaningful. Report 0 so they
-            # pass compliance dashboards that filter on the difference field.
-            Set-NinjaFields -Status 'Insider' `
-                            -BuildNumber $version.BuildNumber `
-                            -CollectedAt $collectedAt `
-                            -MonthsBehind 0
-            return 0
-        }
+        $isInsider = Test-IsInsider
 
         $db = Get-BuildDatabase -Url $DataUrl -CacheDir $CacheDir `
                                 -CacheMaxAgeHours $CacheMaxAgeHours `
                                 -FallbackMaxAgeDays $FallbackMaxAgeDays `
                                 -FallbackJson $FallbackJson
+
+        if ($isInsider) {
+            # Insider devices are continuously updated outside Patch Tuesday
+            # cadence, so "months behind" isn't meaningful. Report 0 so they
+            # pass compliance dashboards that filter on the difference field.
+            # Still try to resolve the build so we can populate the date —
+            # Microsoft publishes most Insider builds on the release-health
+            # page, so a lookup usually succeeds.
+            $insiderDate = ''
+            $insiderEntry = Resolve-BuildInfo -BuildNumber $version.BuildNumber -Database $db
+            if ($null -ne $insiderEntry) {
+                $insiderDate = Format-DateString -Entry $insiderEntry
+            }
+            Set-NinjaFields -Status 'Insider' `
+                            -BuildNumber $version.BuildNumber `
+                            -CollectedAt $collectedAt `
+                            -DateString $insiderDate `
+                            -MonthsBehind 0
+            return 0
+        }
 
         $machine = Resolve-BuildInfo -BuildNumber $version.BuildNumber -Database $db
         if ($null -eq $machine) {
