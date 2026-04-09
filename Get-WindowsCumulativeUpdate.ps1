@@ -22,9 +22,6 @@
     Dashboards should filter on status = OK before computing compliance.
 #>
 #Requires -Version 5.1
-
-$ScriptVersion = '1.0.4'
-
 [CmdletBinding()]
 Param(
     [string]$DataUrl = 'https://raw.githubusercontent.com/bm2025bm/WindowsBuildTracker/main/windows-builds.json',
@@ -32,6 +29,8 @@ Param(
     [int]$CacheMaxAgeHours = 24,
     [int]$FallbackMaxAgeDays = 90
 )
+
+$ScriptVersion = '1.0.4'
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
