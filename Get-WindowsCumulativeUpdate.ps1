@@ -179,13 +179,13 @@ function Set-NinjaFields {
     # rejections.
     $behindType  = if ($null -ne $MonthsBehind) { $MonthsBehind.GetType().FullName } else { '<null>' }
     $behindCount = if ($MonthsBehind -is [array]) { $MonthsBehind.Count } else { 1 }
-    Write-Output "===== Ninja field write ====="
-    Write-Output "  windowscumulativeupdatestatus        = '$Status'"
-    Write-Output "  windowscumulativeupdateversion       = '$BuildNumber'"
-    Write-Output "  windowscumulativeupdatedatacollected = $CollectedAt"
-    Write-Output "  windowscumulativeupdatedate          = '$DateString'"
-    Write-Output "  windowscumulativeupdatedifference    = '$MonthsBehind' (type=$behindType count=$behindCount)"
-    Write-Output "============================="
+    Write-Host "===== Ninja field write ====="
+    Write-Host "  windowscumulativeupdatestatus        = '$Status'"
+    Write-Host "  windowscumulativeupdateversion       = '$BuildNumber'"
+    Write-Host "  windowscumulativeupdatedatacollected = $CollectedAt"
+    Write-Host "  windowscumulativeupdatedate          = '$DateString'"
+    Write-Host "  windowscumulativeupdatedifference    = '$MonthsBehind' (type=$behindType count=$behindCount)"
+    Write-Host "============================="
 
     Ninja-Property-Set windowscumulativeupdatestatus        $Status
     Ninja-Property-Set windowscumulativeupdateversion       $BuildNumber
@@ -219,7 +219,7 @@ function Invoke-Main {
 
     try {
         $version = Get-MyWindowsVersion
-        Write-Output "Detected build: $($version.BuildNumber)"
+        Write-Host "Detected build: $($version.BuildNumber)"
 
         if (Test-IsInsider) {
             Set-NinjaFields -Status 'Insider' -BuildNumber $version.BuildNumber -CollectedAt $collectedAt
