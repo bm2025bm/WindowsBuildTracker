@@ -173,16 +173,32 @@ function Set-NinjaFields {
         [string]$DateString = '',
         $MonthsBehind = $null
     )
+
+    # Verbose dump so the Ninja activity log shows exactly what we're about
+    # to write, including types — useful for diagnosing field-validation
+    # rejections.
+    $behindType  = if ($null -ne $MonthsBehind) { $MonthsBehind.GetType().FullName } else { '<null>' }
+    $behindCount = if ($MonthsBehind -is [array]) { $MonthsBehind.Count } else { 1 }
+    Write-Output "===== Ninja field write ====="
+    Write-Output "  windowscumulativeupdatestatus        = '$Status'"
+    Write-Output "  windowscumulativeupdateversion       = '$BuildNumber'"
+    Write-Output "  windowscumulativeupdatedatacollected = $CollectedAt"
+    Write-Output "  windowscumulativeupdatedate          = '$DateString'"
+    Write-Output "  windowscumulativeupdatedifference    = '$MonthsBehind' (type=$behindType count=$behindCount)"
+    Write-Output "============================="
+
     Ninja-Property-Set windowscumulativeupdatestatus        $Status
     Ninja-Property-Set windowscumulativeupdateversion       $BuildNumber
     Ninja-Property-Set windowscumulativeupdatedatacollected $CollectedAt
     Ninja-Property-Set windowscumulativeupdatedate          $DateString
     if ($null -ne $MonthsBehind) {
-        Ninja-Property-Set windowscumulativeupdatedifference $MonthsBehind
+        # Force to Int32 — defensive in case upstream returned an array,
+        # Int64, or string. Ninja's Integer field is Int32-bounded.
+        $intValue = [int]($MonthsBehind | Select-Object -First 1)
+        Ninja-Property-Set windowscumulativeupdatedifference $intValue
     }
     # When $MonthsBehind is $null (non-OK status), leave the integer field
     # untouched — Ninja rejects empty-string writes to Integer-typed fields.
-    Write-Output "Status=$Status Build=$BuildNumber Date='$DateString' Behind=$MonthsBehind"
 }
 
 # ---------------------------------------------------------------------------
