@@ -22,6 +22,9 @@
     Dashboards should filter on status = OK before computing compliance.
 #>
 #Requires -Version 5.1
+
+$ScriptVersion = '1.0.4'
+
 [CmdletBinding()]
 Param(
     [string]$DataUrl = 'https://raw.githubusercontent.com/bm2025bm/WindowsBuildTracker/main/windows-builds.json',
@@ -218,6 +221,7 @@ function Invoke-Main {
     $version = $null
 
     try {
+        Write-Host "Get-WindowsCumulativeUpdate.ps1 v$ScriptVersion"
         $version = Get-MyWindowsVersion
         Write-Host "Detected build: $($version.BuildNumber)"
 
