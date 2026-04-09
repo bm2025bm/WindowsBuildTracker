@@ -1,0 +1,73 @@
+name: Refresh windows-builds.json
+
+on:
+  schedule:
+    # Wednesdays 06:00 UTC — runs the morning after Patch Tuesday (which lands
+    # 2nd Tuesday ~17:00 UTC), giving Microsoft ~13 hours to update the
+    # release-health page. Runs every Wednesday (not just after Patch Tuesday)
+    # to catch out-of-band releases too.
+    - cron: '0 6 * * 3'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run scraper
+        id: scrape
+        run: python scripts/refresh-builds.py
+
+      - name: Commit changes (if any)
+        run: |
+          if [[ -z "$(git status --porcelain windows-builds.json)" ]]; then
+            echo "No changes to windows-builds.json"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BUILD_COUNT=$(python -c 'import json;print(json.load(open("windows-builds.json"))["buildCount"])')
+          git add windows-builds.json
+          git commit -m "data: refresh windows-builds.json (${BUILD_COUNT} builds)"
+          git push
+
+      - name: Open issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Scraper failed: ${context.workflow} #${context.runNumber}`;
+            const body = [
+              `The windows-builds.json refresh workflow failed.`,
+              ``,
+              `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              ``,
+              `Microsoft likely changed the release-health page layout — inspect the scraper output and update \`scripts/refresh-builds.py\`.`,
+            ].join('\n');
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'scraper-failure',
+            });
+            if (existing.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['scraper-failure'],
+              });
+            }
