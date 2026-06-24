@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-06-17T10:22:40Z",
+  "updatedAt": "2026-06-24T08:50:34Z",
   "source": "learn.microsoft.com/windows/release-health",
-  "buildCount": 1588,
+  "buildCount": 1591,
   "builds": [
     {
       "build": "10240.16405",
@@ -12412,6 +12412,14 @@
       "kb": "KB5094126"
     },
     {
+      "build": "26100.8737",
+      "major": 26100,
+      "year": 2026,
+      "month": 6,
+      "type": "Preview",
+      "kb": "KB5095093"
+    },
+    {
       "build": "26200.6584",
       "major": 26200,
       "year": 2025,
@@ -12628,6 +12636,14 @@
       "kb": "KB5094126"
     },
     {
+      "build": "26200.8737",
+      "major": 26200,
+      "year": 2026,
+      "month": 6,
+      "type": "Preview",
+      "kb": "KB5095093"
+    },
+    {
       "build": "28000.1",
       "major": 28000,
       "year": 2026,
@@ -12706,6 +12722,14 @@
       "month": 6,
       "type": "Standard",
       "kb": "KB5095051"
+    },
+    {
+      "build": "28000.2340",
+      "major": 28000,
+      "year": 2026,
+      "month": 6,
+      "type": "Preview",
+      "kb": "KB5095091"
     }
   ]
 }
