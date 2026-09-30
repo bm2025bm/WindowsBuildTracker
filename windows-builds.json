@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-09-23T10:23:25Z",
+  "updatedAt": "2026-09-30T11:29:32Z",
   "source": "learn.microsoft.com/windows/release-health",
-  "buildCount": 1646,
+  "buildCount": 1648,
   "builds": [
     {
       "build": "10240.16405",
@@ -13022,6 +13022,22 @@
     {
       "build": "26200.9550",
       "major": 26200,
+      "year": 2026,
+      "month": 9,
+      "type": "Preview",
+      "kb": "KB5124010"
+    },
+    {
+      "build": "26300.9457",
+      "major": 26300,
+      "year": 2026,
+      "month": 9,
+      "type": "Standard",
+      "kb": ""
+    },
+    {
+      "build": "26300.9550",
+      "major": 26300,
       "year": 2026,
       "month": 9,
       "type": "Preview",
