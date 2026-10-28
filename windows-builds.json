@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-10-21T10:44:38Z",
+  "updatedAt": "2026-10-28T11:45:37Z",
   "source": "learn.microsoft.com/windows/release-health",
-  "buildCount": 1659,
+  "buildCount": 1669,
   "builds": [
     {
       "build": "10240.16405",
@@ -2978,6 +2978,14 @@
       "month": 10,
       "type": "Standard",
       "kb": "KB5126868"
+    },
+    {
+      "build": "14393.9615",
+      "major": 14393,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134123"
     },
     {
       "build": "14393.969",
@@ -6012,6 +6020,14 @@
       "kb": "KB5126651"
     },
     {
+      "build": "17763.9378",
+      "major": 17763,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134124"
+    },
+    {
       "build": "17763.973",
       "major": 17763,
       "year": 2020,
@@ -8780,6 +8796,14 @@
       "kb": "KB5126657"
     },
     {
+      "build": "19044.7811",
+      "major": 19044,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134125"
+    },
+    {
       "build": "19045.2130",
       "major": 19045,
       "year": 2022,
@@ -9498,6 +9522,14 @@
       "month": 10,
       "type": "Standard",
       "kb": "KB5126657"
+    },
+    {
+      "build": "19045.7811",
+      "major": 19045,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134125"
     },
     {
       "build": "20348.1006",
@@ -10306,6 +10338,14 @@
       "month": 10,
       "type": "Standard",
       "kb": "KB5126655"
+    },
+    {
+      "build": "20348.5773",
+      "major": 20348,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134140"
     },
     {
       "build": "20348.587",
@@ -12044,6 +12084,14 @@
       "kb": "KB5126653"
     },
     {
+      "build": "22631.7654",
+      "major": 22631,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134130"
+    },
+    {
       "build": "26100.1742",
       "major": 26100,
       "year": 2024,
@@ -12290,6 +12338,14 @@
       "month": 10,
       "type": "Standard",
       "kb": "KB5126646"
+    },
+    {
+      "build": "26100.33674",
+      "major": 26100,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134137"
     },
     {
       "build": "26100.3403",
@@ -12796,6 +12852,14 @@
       "kb": "KB5127648"
     },
     {
+      "build": "26100.9725",
+      "major": 26100,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134133"
+    },
+    {
       "build": "26200.6584",
       "major": 26200,
       "year": 2025,
@@ -13100,6 +13164,14 @@
       "kb": "KB5127648"
     },
     {
+      "build": "26200.9725",
+      "major": 26200,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134133"
+    },
+    {
       "build": "26300.9457",
       "major": 26300,
       "year": 2026,
@@ -13108,20 +13180,20 @@
       "kb": ""
     },
     {
-      "build": "26300.9550",
-      "major": 26300,
-      "year": 2026,
-      "month": 9,
-      "type": "Preview",
-      "kb": "KB5124010"
-    },
-    {
       "build": "26300.9711",
       "major": 26300,
       "year": 2026,
       "month": 10,
       "type": "Standard",
       "kb": "KB5127648"
+    },
+    {
+      "build": "26300.9725",
+      "major": 26300,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134133"
     },
     {
       "build": "28000.1",
@@ -13274,6 +13346,14 @@
       "month": 10,
       "type": "Standard",
       "kb": "KB5127646"
+    },
+    {
+      "build": "28000.3237",
+      "major": 28000,
+      "year": 2026,
+      "month": 10,
+      "type": "OOB",
+      "kb": "KB5134134"
     }
   ]
 }
