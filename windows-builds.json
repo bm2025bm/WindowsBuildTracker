@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-11T13:05:22Z",
+  "updatedAt": "2026-11-25T16:20:56Z",
   "source": "learn.microsoft.com/windows/release-health",
-  "buildCount": 1688,
+  "buildCount": 1696,
   "builds": [
     {
       "build": "10240.16405",
@@ -6044,6 +6044,14 @@
       "kb": "KB5131085"
     },
     {
+      "build": "17763.9488",
+      "major": 17763,
+      "year": 2026,
+      "month": 11,
+      "type": "OOB",
+      "kb": "KB5136490"
+    },
+    {
       "build": "17763.973",
       "major": 17763,
       "year": 2020,
@@ -8828,6 +8836,14 @@
       "kb": "KB5131096"
     },
     {
+      "build": "19044.7850",
+      "major": 19044,
+      "year": 2026,
+      "month": 11,
+      "type": "OOB",
+      "kb": "KB5136493"
+    },
+    {
       "build": "19045.2130",
       "major": 19045,
       "year": 2022,
@@ -9562,6 +9578,14 @@
       "month": 11,
       "type": "Standard",
       "kb": "KB5131096"
+    },
+    {
+      "build": "19045.7850",
+      "major": 19045,
+      "year": 2026,
+      "month": 11,
+      "type": "OOB",
+      "kb": "KB5136493"
     },
     {
       "build": "20348.1006",
@@ -10394,6 +10418,14 @@
       "month": 11,
       "type": "Standard",
       "kb": "KB5131090"
+    },
+    {
+      "build": "20348.5873",
+      "major": 20348,
+      "year": 2026,
+      "month": 11,
+      "type": "OOB",
+      "kb": "KB5136487"
     },
     {
       "build": "20348.617",
@@ -12412,6 +12444,14 @@
       "kb": "KB5131080"
     },
     {
+      "build": "26100.33828",
+      "major": 26100,
+      "year": 2026,
+      "month": 11,
+      "type": "OOB",
+      "kb": "KB5136489"
+    },
+    {
       "build": "26100.3403",
       "major": 26100,
       "year": 2025,
@@ -12940,6 +12980,14 @@
       "kb": "KB5132061"
     },
     {
+      "build": "26200.10075",
+      "major": 26200,
+      "year": 2026,
+      "month": 11,
+      "type": "Preview",
+      "kb": "KB5132057"
+    },
+    {
       "build": "26200.6584",
       "major": 26200,
       "year": 2025,
@@ -13276,6 +13324,14 @@
       "kb": "KB5132061"
     },
     {
+      "build": "26300.10075",
+      "major": 26300,
+      "year": 2026,
+      "month": 11,
+      "type": "Preview",
+      "kb": "KB5132057"
+    },
+    {
       "build": "26300.9457",
       "major": 26300,
       "year": 2026,
@@ -13506,6 +13562,14 @@
       "month": 11,
       "type": "Standard",
       "kb": "KB5132059"
+    },
+    {
+      "build": "28000.3620",
+      "major": 28000,
+      "year": 2026,
+      "month": 11,
+      "type": "Preview",
+      "kb": "KB5132265"
     }
   ]
 }
